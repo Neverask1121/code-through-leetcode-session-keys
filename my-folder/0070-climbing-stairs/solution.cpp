@@ -1,16 +1,20 @@
 class Solution {
-public:
-    int climbStairs(int n, unordered_map<int, int>&memo){
-        if(n == 1 || n == 0){
+private:
+    int climbStairs1(int n, vector<int>&dp){
+        if(n<=1){
             return 1;
         }
-        if(memo.find(n) == memo.end()){
-            memo[n] = climbStairs(n-1, memo) + climbStairs(n-2, memo);
+        if(dp[n] != -1){
+            return dp[n];
         }
-        return memo[n];
+        int left = climbStairs1(n-1, dp);
+        int right = climbStairs1(n-2, dp);
+        dp[n] = left+right;
+        return dp[n];
     }
+public:
     int climbStairs(int n) {
-        unordered_map<int, int> memo;
-        return climbStairs(n, memo);
+        vector<int>dp(n+1, -1);
+        return climbStairs1(n, dp);
     }
 };
